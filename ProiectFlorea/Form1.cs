@@ -38,6 +38,15 @@ namespace ProiectFlorea
                 for the United States of America";
 
         }
-        
+
+        private void LoadFileButton_Click(object sender, EventArgs e)
+        {
+            var fileDialog = new OpenFileDialog();
+            fileDialog.Filter = ProiectFlorea.Properties.Resources.SupportedFormats;
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show(fileDialog.FileName);
+            }
+        }
     }
 }

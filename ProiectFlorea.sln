@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29324.140
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProiectFlorea", "ProiectFlorea\ProiectFlorea.csproj", "{1AB4D529-770B-4409-BDF4-CB8CE430B959}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProiectFlorea", "ProiectFlorea\ProiectFlorea.csproj", "{1AB4D529-770B-4409-BDF4-CB8CE430B959}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{165DF4A4-EB41-4A9D-B1D9-BFE3FEE5C9CB}"
+	ProjectSection(SolutionItems) = preProject
+		input.ins = input.ins
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
