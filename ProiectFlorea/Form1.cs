@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,9 +19,9 @@ namespace ProiectFlorea
         public Form1()
         {
             InitializeComponent();
-           
 
-            string oldText =  @"We the people
+
+            string oldText = @"We the people
                 of the united states of america
                 establish justice
                 ensure domestic tranquility
@@ -36,17 +37,13 @@ namespace ProiectFlorea
                 to ourselves and our posterity
                 do ordain and establish this constitution
                 for the United States of America";
-
         }
 
         private void LoadFileButton_Click(object sender, EventArgs e)
         {
-            var fileDialog = new OpenFileDialog();
-            fileDialog.Filter = ProiectFlorea.Properties.Resources.SupportedFormats;
-            if (fileDialog.ShowDialog() == DialogResult.OK)
-            {
-                MessageBox.Show(fileDialog.FileName);
-            }
+            richTextBox1.Text = new FileReader()
+                .PromptUserForFile()
+                .ReadFromFile();
         }
     }
 }
