@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using ProiectFlorea.instructions;
-using ProiectFlorea.instructions.validators;
 
 namespace ProiectFlorea.Utils
 {
@@ -31,22 +31,21 @@ namespace ProiectFlorea.Utils
             return (instructions.Any(), instructions);
         }
 
-        private static bool IsInvalidInstruction(Line line)
+        private static bool IsInvalidInstruction(Line line) => !IsValidInstruction(line);
+
+        private static bool IsValidInstruction(Line line)
         {
-            if (!line.HasContent)
-            {
-                return false;
-            }
+            if (!line.HasContent) return false;
+            var instructionRegex = GetInstructionFormatRegexFromOperator(line.Operator);
+            if (instructionRegex == null) return false;
+            var regex = new Regex(instructionRegex);
+            return regex.IsMatch(line.Instruction);
+        }
 
-            var operation = line.Operator;
-            var instructionType = Type.GetType($"ProiectFlorea.instructions.validators.{operation}");
-            if (instructionType == null)
-            {
-                return true;
-            }
-
-            var instruction = (InstructionValidator) Activator.CreateInstance(instructionType);
-            return !instruction.IsValid(line.Instruction);
+        private static string GetInstructionFormatRegexFromOperator(string instructionType)
+        {
+            var operatorMethod = typeof(RequiredInstructionFormat).GetProperty(instructionType);
+            return operatorMethod != null ? (string) operatorMethod.GetValue(null, null) : null;
         }
     }
 }
