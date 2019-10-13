@@ -28,7 +28,7 @@ namespace ProiectFlorea.Utils
         {
             var invalidInstructions = lines.Where(IsInvalidInstruction);
             var instructions = invalidInstructions as Line[] ?? invalidInstructions.ToArray();
-            return (instructions.Any(), instructions);
+            return (!instructions.Any(), instructions);
         }
 
         private static bool IsInvalidInstruction(Line line) => !IsValidInstruction(line);

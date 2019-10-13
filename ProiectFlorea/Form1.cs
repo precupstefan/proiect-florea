@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using DiffPlex;
 using DiffPlex.DiffBuilder;
 using DiffPlex.DiffBuilder.Model;
+using ProiectFlorea.Utils;
 
 namespace ProiectFlorea
 {
@@ -41,9 +42,10 @@ namespace ProiectFlorea
 
         private void LoadFileButton_Click(object sender, EventArgs e)
         {
-            richTextBox1.Text = new FileReader()
+            var text = new FileReader()
                 .PromptUserForFile()
                 .ReadFromFile();
+            CodeSyntaxChecker.IsValid(text);
         }
     }
 }
