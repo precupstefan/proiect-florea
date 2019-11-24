@@ -3,6 +3,8 @@
 http://webspace.ulbsibiu.ro/adrian.florea/html/Planificari/TemePro.pdf
 http://webspace.ulbsibiu.ro/adrian.florea/html/Planificari/Planif_SOAC.pdf
 
+INFORMATII GASESTI LA PAGINA 125 din SOAC_MATRIX
+
 https://imgur.com/a/tsHPoCP
 
 ![1](https://i.imgur.com/XZWfSkn.png)
