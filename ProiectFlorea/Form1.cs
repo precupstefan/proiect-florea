@@ -17,35 +17,41 @@ namespace ProiectFlorea
 {
     public partial class Form1 : Form
     {
+        private List<string> originalText;
+
         public Form1()
         {
             InitializeComponent();
-
-
-            string oldText = @"We the people
-                of the united states of america
-                establish justice
-                ensure domestic tranquility
-                provide for the common defence
-                secure the blessing of liberty
-                to ourselves and our posterity";
-            string newText = @"We the peaple
-                in order to form a more perfect union
-                establish justice
-                ensure domestic tranquility
-                promote the general welfare and
-                secure the blessing of liberty
-                to ourselves and our posterity
-                do ordain and establish this constitution
-                for the United States of America";
         }
 
         private void LoadFileButton_Click(object sender, EventArgs e)
         {
-            var text = new FileReader()
+            OriginalLinesListBox.Items.Clear();
+            originalText = new FileReader()
                 .PromptUserForFile()
-                .ReadFromFile();
-            CodeSyntaxChecker.IsValid(text);
+                .ReadLinesFromFile();
+
+            originalText.ForEach((s => OriginalLinesListBox.Items.Add(s)));
+        }
+
+        private void MovMergingButton_Click(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void MovReabsorptionButton_Click(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void ImmediateMergingButton_Click(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void MemoryAntiAliasButton_Click(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

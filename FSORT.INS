@@ -1,0 +1,193 @@
+/* changed R4 to R13  */
+	MOV GP, #4096
+	MOV SP, #4096
+	BSR RA, _main (#0)
+	TRAP #0
+ _Initrand:
+	SUB SP, SP, #128
+	MOV R13, #74755
+	ST _seed, R13
+	ADD SP, SP, #128
+	MOV PC, RA (#0)
+ _Rand:
+	SUB SP, SP, #128
+	LD R13, _seed
+	MULT R13, R13, #1309
+	ADD R13, R13, #13849
+	AND R13, R13, #65535
+	ST _seed, R13
+	MOV R5, R13
+	ADD SP, SP, #128
+	MOV PC, RA (#0)
+ _Initarr:
+	SUB SP, SP, #128
+	ST 0(SP), RA
+	ST 8(SP), R17
+	ST 12(SP), R18
+	BSR RA, _Initrand (#0)	
+	ST _biggest, R0
+	ST _littlest, R0
+	MOV R18, #1
+	MOV R17, #_sortlist+4
+L10:
+	BSR RA, _Rand (#0)	
+	DIV R13, R5, #100000
+	MULT R13, R13, #100000
+	SUB R13, R5, R13
+	ADD R5, R13, #-50000
+	ST (R0, R17), R5
+	LD R13, _biggest
+	LES B1, R5, R13
+	BT B1, L7 (#0)	
+	ST _biggest, R5
+	BRA L6 (#0)	
+L7:
+	LD R13, _littlest
+	GES B1, R5, R13
+	BT B1, L6 (#0)	
+	ST _littlest, R5
+L6:
+	ADD R17, R17, #4
+	ADD R18, R18, #1
+	LES B1, R18, #500
+	BT B1, L10 (#0)	
+	LD R17, 8(SP)
+	LD R18, 12(SP)
+	LD RA, 0(SP)
+	ADD SP, SP, #128
+	MOV PC, RA (#0)
+ _Quicksort:
+	SUB SP, SP, #128
+	ST 0(SP), RA
+	ST 8(SP), R17
+	ST 12(SP), R18
+	ST 16(SP), R19
+	MOV R18, R5
+	MOV R19, R7
+	MOV R17, R6
+	ADD R5, R17, R19
+	LSR R13, R5, #31
+	ADD R13, R5, R13
+	ASR R13, R13, #1
+	ASL R13, R13, #2
+	ADD R13, R18, R13
+	LD R10, (R0, R13)
+	ASL R13, R19, #2
+	ADD R9, R13, R18
+	ASL R13, R17, #2
+	ADD R8, R13, R18
+L12:
+	ASL R5, R17, #2
+	LD R13, (R0, R8)
+	GES B1, R13, R10
+	BT B1, L16 (#0)	
+	ADD R5, R5, R18
+L17:
+	ADD R5, R5, #4
+	ADD R8, R8, #4
+	ADD R17, R17, #1
+	LD R13, (R0, R5)
+	LTS B1, R13, R10
+	BT B1, L17 (#0)	
+L16:
+	ASL R5, R7, #2
+	LD R13, (R0, R9)
+	GES B1, R10, R13
+	BT B1, L19 (#0)	
+	ADD R5, R5, R18
+L20:
+	ADD R5, R5, #-4
+	ADD R9, R9, #-4
+	ADD R7, R7, #-1
+	LD R13, (R0, R5)
+	LTS B1, R10, R13
+	BT B1, L20 (#0)	
+L19:
+	GTS B1, R17, R7
+	BT B1, L24 (#0)	
+	LD R13, (R0, R8)
+	LD R11, (R0, R9)
+	ST (R0, R8), R11
+	ST (R0, R9), R13
+	ADD R8, R8, #4
+	ADD R17, R17, #1
+	ADD R9, R9, #-4
+	ADD R7, R7, #-1
+	LES B1, R17, R7
+	BT B1, L12 (#0)	
+L24:
+	GES B1, R6, R7
+	BT B1, L22 (#0)	
+	MOV R5, R18
+	BSR RA, _Quicksort (#0)	
+L22:
+	GES B1, R17, R19
+	BT B1, L23 (#0)	
+	MOV R5, R18
+	MOV R6, R17
+	MOV R7, R19
+	BSR RA, _Quicksort (#0)	
+L23:
+	LD R17, 8(SP)
+	LD R18, 12(SP)
+	LD R19, 16(SP)
+	LD RA, 0(SP)
+	ADD SP, SP, #128
+	MOV PC, RA (#0)
+ Lc0:
+	.ascii "Error in Quick.\12\0"
+ Lc1:
+	.ascii "\12\12sort.c has sorted %d elements\0"
+ Lc2:
+	.ascii "\12Final values are   : elem[1] = %d  elem[30] = %d  elem[%d] = %d\0"
+ Lc3:
+	.ascii "\12Correct values are :           -50000             -46856              15505\12\12\0"
+ _Quick:
+	SUB SP, SP, #128
+	ST 0(SP), RA
+	BSR RA, _Initarr (#0)	
+	MOV R5, #_sortlist
+	MOV R6, #1
+	MOV R7, #500
+	BSR RA, _Quicksort (#0)	
+	LD R5, _sortlist+4
+	LD R13, _littlest
+	NE B1, R5, R13
+	BT B1, L27 (#0)	
+	LD R5, _sortlist+2000
+	LD R13, _biggest
+	EQ B1, R5, R13
+	BT B1, L26 (#0)	
+L27:
+	MOV R5, #Lc0
+
+	BSR RA, _printf (#0)	
+L26:
+	MOV R5, #Lc1
+
+	MOV R6, #500
+	BSR RA, _printf (#0)	
+	MOV R5, #Lc2
+
+	LD R6, _sortlist+4
+	LD R7, _sortlist+120
+	MOV R8, #500
+	LD R9, _sortlist+2000
+	BSR RA, _printf (#0)	
+	MOV R5, #Lc3
+
+	BSR RA, _printf (#0)	
+	LD RA, 0(SP)
+	ADD SP, SP, #128
+	MOV PC, RA (#0)
+ _main:
+	SUB SP, SP, #128
+	ST 0(SP), RA
+	BSR RA, _Quick (#0)	
+	LD RA, 0(SP)
+	ADD SP, SP, #128
+	MOV PC, RA (#0)
+	.comm _sortlist,2004,
+	.comm _biggest,4,
+	.comm _littlest,4,
+	.comm _seed,4,
