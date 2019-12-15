@@ -18,10 +18,9 @@ namespace Utils
                 return InstructionType.Store;
             }
 
-            // TODO ADD MOV PC
             var bramches = new string[]
             {
-                "BT", "BF", "BSR", "TRAP"
+                "BT", "BF", "BSR", "TRAP","BRA"
             };
             if (bramches.Any(branch => branch.Contains(mnemonic)))
             {
@@ -40,7 +39,7 @@ namespace Utils
         {
             var branchMnemonics = new string[]
             {
-                "BT", "BF", "BSR"
+                "BT", "BF", "BSR", "BRA"
             };
             return branchMnemonics.Any(instruction.Contains);
         }
@@ -56,7 +55,7 @@ namespace Utils
         public static string GetLabelFromBranchInstruction(string instruction)
         {
             var splitInstruction = instruction.Split(" ");
-            return splitInstruction[2];
+            return splitInstruction[0] =="BRA" ? splitInstruction[1] :splitInstruction[2];
         }
 
         public static bool IsLabelCommentOrEmptyString(string instruction)

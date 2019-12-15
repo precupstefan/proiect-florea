@@ -9,7 +9,11 @@ namespace Utils
         private int index = 0;
         private int? PC = 0;
         private Stack<int> IndexQueue = new Stack<int>();
+        private Dictionary<int, String> pcDict = new Dictionary<int, String>();
 
+
+        //TODO: ASK FLOREA WHAT IS `BRA`
+        // WHAT IS ST(R0,R17),R5
         public List<MegaInstruction> Build(List<string> assemblyLines, List<Trace> traceLines)
         {
             if (assemblyLines.Count == 0)
@@ -32,10 +36,21 @@ namespace Utils
                     while (!goToNextTrace)
                     {
                         var instruction = assemblyLines[index];
+                        if (instruction.Contains("printf"))
+                        {
+                          var x=  1 == 1;
+                        }
+
                         if (InstructionUtil.IsLabelCommentOrEmptyString(instruction))
                         {
                             index++;
                             continue;
+                        }
+
+                        if (!pcDict.ContainsKey((int) PC) ||
+                            !pcDict[(int) PC].Equals(instruction))
+                        {
+                            pcDict.Add((int) PC, instruction);
                         }
 
                         var instructionType = InstructionUtil.TypeOf(instruction);
@@ -48,7 +63,6 @@ namespace Utils
                         }
                         else
                         {
-
                             goToNextTrace = true;
                             if (instructionType == InstructionType.Load || instructionType == InstructionType.Store)
                             {
@@ -59,15 +73,16 @@ namespace Utils
 
                             if (instructionType == InstructionType.Branch)
                             {
-
                                 var desiredTrace = trace;
                                 var shouldSkip = false;
-                                if (!trace.IsOfType(TraceType.Branch))
+                                if (
+//                                    !trace.IsOfType(TraceType.Branch)|| 
+                                    trace.CURRENT_ADDRESS != PC)
                                 {
                                     desiredTrace = new Trace($"A {PC} XXXX");
                                     shouldSkip = true;
                                 }
-                                
+
                                 var megaInstruction = new MegaInstruction(instruction, desiredTrace);
                                 list.Add(megaInstruction);
                                 if (shouldSkip)
@@ -77,6 +92,8 @@ namespace Utils
                                     goToNextTrace = false;
                                     continue;
                                 }
+
+
                                 index = DetermineIndex(assemblyLines, instruction);
                             }
                         }

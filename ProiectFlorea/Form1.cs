@@ -36,7 +36,7 @@ namespace ProiectFlorea
                 .PromptUserForFile("INS (*.ins)|*.ins")
                 .ReadLinesFromFile();
             originalAssemblyLines = originalAssemblyLines
-                .Select(s => Regex.Replace(s, @"[^0-9a-zA-Z:,_# /* *()]+", ""))
+                .Select(s => Regex.Replace(s, @"[^0-9a-zA-Z:,-_# /* *()]+", ""))
                 .ToList();
 
             var originaltrLines = new FileReader()
