@@ -16,9 +16,9 @@ namespace ProiectFlorea
             return fileStream.ReadToEnd();
         }
 
-        public FileReader PromptUserForFile()
+        public FileReader PromptUserForFile(string format)
         {
-            var fileDialog = new OpenFileDialog {Filter = ProiectFlorea.Properties.Resources.SupportedFormats};
+            var fileDialog = new OpenFileDialog {Filter = format};
             var dialogResult = fileDialog.ShowDialog();
             SelectedFIle = dialogResult == DialogResult.OK ? fileDialog.FileName : null;
             return this;
