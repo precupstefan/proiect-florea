@@ -57,7 +57,7 @@ namespace Utils
                         if (instructionType == InstructionType.Arithmetic)
                         {
                             var arithmeticTrace = new Trace($"A {PC} XXXX");
-                            var megaInstruction = new MegaInstruction(instruction, arithmeticTrace);
+                            var megaInstruction = new MegaInstruction(index + 1, instruction, arithmeticTrace);
                             list.Add(megaInstruction);
                             index++;
                         }
@@ -66,7 +66,7 @@ namespace Utils
                             goToNextTrace = true;
                             if (instructionType == InstructionType.Load || instructionType == InstructionType.Store)
                             {
-                                var megaInstruction = new MegaInstruction(instruction, trace);
+                                var megaInstruction = new MegaInstruction(index + 1, instruction, trace);
                                 list.Add(megaInstruction);
                                 index++;
                             }
@@ -83,7 +83,7 @@ namespace Utils
                                     shouldSkip = true;
                                 }
 
-                                var megaInstruction = new MegaInstruction(instruction, desiredTrace);
+                                var megaInstruction = new MegaInstruction(index + 1, instruction, desiredTrace);
                                 list.Add(megaInstruction);
                                 if (shouldSkip)
                                 {

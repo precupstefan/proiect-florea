@@ -1,4 +1,3 @@
-/* changed R4 to R13  */
 	MOV GP, #4096
 	MOV SP, #4096
 	BSR RA, _main (#0)
@@ -160,22 +159,18 @@ L23:
 	BT B1, L26 (#0)	//150
 L27:
 	MOV R5, #Lc0
-
 	BSR RA, _printf (#0)	
 L26:
 	MOV R5, #Lc1
-
 	MOV R6, #500
 	BSR RA, _printf (#0)	
 	MOV R5, #Lc2
-
 	LD R6, _sortlist+4
 	LD R7, _sortlist+120
 	MOV R8, #500
 	LD R9, _sortlist+2000
 	BSR RA, _printf (#0)	
 	MOV R5, #Lc3
-
 	BSR RA, _printf (#0)	
 	LD RA, 0(SP)
 	ADD SP, SP, #128
