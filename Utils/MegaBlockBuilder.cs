@@ -36,9 +36,9 @@ namespace Utils
                     while (!goToNextTrace)
                     {
                         var instruction = assemblyLines[index];
-                        if (instruction.Contains("printf"))
+                        if (instruction.Contains("trap"))
                         {
-                          var x=  1 == 1;
+                            var x = 1 == 1;
                         }
 
                         if (InstructionUtil.IsLabelCommentOrEmptyString(instruction))
@@ -107,7 +107,7 @@ namespace Utils
         private int DetermineIndex(List<string> assemblyLines, string instruction)
         {
             var isBranchInstructionWithLabel = InstructionUtil.IsBranchInstructionWithLabel(instruction);
-            if (isBranchInstructionWithLabel)
+            if (isBranchInstructionWithLabel && !instruction.Contains("printf"))
             {
                 var label = InstructionUtil.GetLabelFromBranchInstruction(instruction);
 
@@ -127,7 +127,7 @@ namespace Utils
             }
 
             var isMovBranch = InstructionUtil.IsMovBranchInstruction(instruction);
-            if (isMovBranch)
+            if (isMovBranch || instruction.Contains("printf"))
             {
                 return IndexQueue.Pop();
             }

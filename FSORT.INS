@@ -100,11 +100,11 @@ L20:
 	ADD R9, R9, #-4
 	ADD R7, R7, #-1
 	LD R13, (R0, R5)
-	LTS B1, R10, R13
-	BT B1, L20 (#0)	
+	LTS B1, R10, R13 /90
+	BT B1, L20 (#0)	/91
 L19:
-	GTS B1, R17, R7
-	BT B1, L24 (#0)	
+	GTS B1, R17, R7 /92
+	BT B1, L24 (#0)	/93
 	LD R13, (R0, R8)
 	LD R11, (R0, R9)
 	ST (R0, R8), R11
@@ -154,10 +154,10 @@ L23:
 	LD R13, _littlest
 	NE B1, R5, R13
 	BT B1, L27 (#0)	
-	LD R5, _sortlist+2000
-	LD R13, _biggest
-	EQ B1, R5, R13
-	BT B1, L26 (#0)	
+	LD R5, _sortlist+2000 //147
+	LD R13, _biggest //148
+	EQ B1, R5, R13 //149
+	BT B1, L26 (#0)	//150
 L27:
 	MOV R5, #Lc0
 
@@ -184,10 +184,10 @@ L26:
 	SUB SP, SP, #128
 	ST 0(SP), RA
 	BSR RA, _Quick (#0)	
-	LD RA, 0(SP)
+	LD RA, 0(SP) //154
 	ADD SP, SP, #128
-	MOV PC, RA (#0)
-	.comm _sortlist,2004,
-	.comm _biggest,4,
-	.comm _littlest,4,
-	.comm _seed,4,
+	MOV PC, RA (#0) //156
+	.comm _sortlist,2004, //157
+	.comm _biggest,4, //158
+	.comm _littlest,4, //159
+	.comm _seed,4, //160
