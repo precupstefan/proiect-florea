@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
+using Entities;
 
 namespace InstructionRearrangement
 {
-    public class MovReabsorption: AbstractRearrangement
+    public class MovReabsorption : AbstractRearrangement
     {
-        public override List<string> ImproveCode()
+
+        public MovReabsorption(List<string> assemblyLines, List<Trace> originalTracesLines) : base(assemblyLines,
+            originalTracesLines)
         {
-            throw new System.NotImplementedException();
         }
     }
 }

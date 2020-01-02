@@ -20,7 +20,7 @@ namespace Utils
 
             var bramches = new string[]
             {
-                "BT", "BF", "BSR", "TRAP","BRA"
+                "BT", "BF", "BSR", "TRAP", "BRA"
             };
             if (bramches.Any(branch => branch.Contains(mnemonic)))
             {
@@ -55,7 +55,7 @@ namespace Utils
         public static string GetLabelFromBranchInstruction(string instruction)
         {
             var splitInstruction = instruction.Split(" ");
-            return splitInstruction[0] =="BRA" ? splitInstruction[1] :splitInstruction[2];
+            return splitInstruction[0] == "BRA" ? splitInstruction[1] : splitInstruction[2];
         }
 
         public static bool IsLabelCommentOrEmptyString(string instruction)
@@ -76,6 +76,13 @@ namespace Utils
             }
 
             return false;
+        }
+
+        public static bool IsLoadOrStoreInstruction(string instruction)
+        {
+            var loadStoreType = new InstructionType[] {InstructionType.Load, InstructionType.Store};
+            var instructionType = InstructionUtil.TypeOf(instruction);
+            return loadStoreType.Contains(instructionType);
         }
     }
 }

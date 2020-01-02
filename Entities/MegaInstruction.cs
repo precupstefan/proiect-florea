@@ -6,7 +6,7 @@ namespace Entities
     {
         public Int32 Line { get; }
         public Instruction Instruction { get; }
-        private Trace Trace { get; }
+        public Trace Trace { get; }
 
         public MegaInstruction(int line, string instruction, string trace)
         {

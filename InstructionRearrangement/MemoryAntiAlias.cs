@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
+using Entities;
 
 namespace InstructionRearrangement
 {
     public class MemoryAntiAlias: AbstractRearrangement
     {
-        public override List<string> ImproveCode()
+
+
+        public MemoryAntiAlias(List<string> assemblyLines, List<Trace> originalTracesLines) : base(assemblyLines, originalTracesLines)
         {
-            throw new System.NotImplementedException();
         }
     }
 }

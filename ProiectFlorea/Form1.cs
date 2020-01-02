@@ -13,6 +13,7 @@ using DiffPlex;
 using DiffPlex.DiffBuilder;
 using DiffPlex.DiffBuilder.Model;
 using Entities;
+using InstructionRearrangement;
 using ProiectFlorea.Utils;
 using Utils;
 
@@ -21,7 +22,9 @@ namespace ProiectFlorea
     public partial class Form1 : Form
     {
         private List<string> originalAssemblyLines;
+        private List<string> modifiableAssemblyLines;
         private List<Trace> originalTracesLines;
+        private List<MegaInstruction> megaInstructions;
 
         public Form1()
         {
@@ -38,6 +41,8 @@ namespace ProiectFlorea
             originalAssemblyLines = originalAssemblyLines
                 .Select(s => Regex.Replace(s, @"[^0-9a-zA-Z:,-_# /* *()]+", ""))
                 .ToList();
+
+            modifiableAssemblyLines = originalAssemblyLines.Select(s => s).ToList();
 
             var originaltrLines = new FileReader()
                 .PromptUserForFile("TRC (*.trc)|*.trc")
@@ -56,8 +61,9 @@ namespace ProiectFlorea
                 }
             });
 
-            originalAssemblyLines.ForEach((s => OriginalLinesListBox.Items.Add(s)));
-            originalTraces.ForEach(s => OriginalTracesListBox.Items.Add(s));
+//            originalAssemblyLines.ForEach((s => OriginalLinesListBox.Items.Add(s)));
+            originalAssemblyLines.ForEach(s => OriginalLinesTextBox.AppendText(s + Environment.NewLine));
+//            originalTraces.ForEach(s => OriginalTracesListBox.Items.Add(s));
             originalTracesLines = originalTraces.Select(trace => new Trace(trace)).ToList();
         }
 
@@ -73,7 +79,11 @@ namespace ProiectFlorea
 
         private void ImmediateMergingButton_Click(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            AbstractRearrangement abstractRearrangement =
+                new ImmediateMerging(modifiableAssemblyLines, originalTracesLines);
+            modifiableAssemblyLines = abstractRearrangement.Rearrange();
+//            modifiableAssemblyLines.ForEach(line => ModifiedLinesListBox.Items.Add(line));
+            modifiableAssemblyLines.ForEach(s => ModifiedLinesTextBox.AppendText(s + Environment.NewLine));
         }
 
         private void MemoryAntiAliasButton_Click(object sender, EventArgs e)
@@ -84,8 +94,8 @@ namespace ProiectFlorea
         private void CreateMegaBlockButton_Click(object sender, EventArgs e)
         {
             var builder = new MegaBlockBuilder();
-            var list = builder.Build(originalAssemblyLines, originalTracesLines);
-            list.ForEach(item => MegaBlockListBox.Items.Add(item.ToString()));
+            megaInstructions = builder.Build(originalAssemblyLines, originalTracesLines);
+//            megaInstructions.ForEach(item => MegaBlockListBox.Items.Add(item.ToString()));
         }
     }
 }
