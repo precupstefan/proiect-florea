@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using Entities;
@@ -58,7 +60,7 @@ namespace InstructionRearrangement
                     ApplyMovReabsorption(megaInstructionOne, megaInstructionTwo);
                     handledLines.Add(megaInstructionOne.ToString());
                 }
-                
+
                 if (Util.CanApplyMemoryAntiAlias(megaInstructionOne, megaInstructionTwo))
                 {
                     // TODO: Line 95/96 same address referenced what to do?
@@ -84,7 +86,7 @@ namespace InstructionRearrangement
         private string GenerateNewMovReabsorptionInstruction(Instruction instructionTwo, Instruction instructionOne)
         {
             var sb = new StringBuilder();
-            sb.Append(instructionTwo.MNEMONIC);
+            sb.Append(instructionOne.MNEMONIC);
             sb.Append(" ");
             sb.Append(instructionTwo.DESTINATION);
             sb.Append(", ");
@@ -100,14 +102,55 @@ namespace InstructionRearrangement
             var instructionOne = megaInstructionOne.Instruction;
             var instructionTwo = megaInstructionTwo.Instruction;
 
-            if (instructionTwo.MNEMONIC == "ADD")
+            /**TODO:
+             *  - instructiune relationala
+             *  - instructiune gardata
+            **/
+            var mergedInstruction = instructionTwo.MNEMONIC switch
+            {
+                "ADD" => GenerateNewMovMergingInstruction(instructionTwo, instructionOne),
+                "ST" => GenerateNewStMovMergingInstruction(instructionOne, instructionTwo),
+                _ => ""
+            };
+
+            if (mergedInstruction != "")
             {
                 var instructionLine = megaInstructionTwo.Line;
                 var indexOfLine = instructionLine - 1;
                 AssemblyLines.RemoveRange(indexOfLine, 1);
-                var mergedInstruction = GenerateNewMovMergingInstruction(instructionTwo, instructionOne);
                 AssemblyLines.Insert(indexOfLine, mergedInstruction);
             }
+        }
+
+        private string GenerateNewStMovMergingInstruction(Instruction instructionOne, Instruction instructionTwo)
+        {
+            if (instructionOne.DESTINATION == instructionTwo.SOURCE1)
+            {
+                if (instructionOne.SOURCE1.StartsWith("#") && instructionOne.SOURCE1 != "#0")
+                {
+                    return "";
+                }
+
+                var source1 = instructionOne.SOURCE1 == "#0" ? "R0" : instructionOne.SOURCE1;
+                return $"{instructionTwo.MNEMONIC} {instructionTwo}, {source1}";
+            }
+
+            if (instructionTwo.DESTINATION.Contains(instructionOne.DESTINATION))
+            {
+                string newInstruction;
+                if (instructionOne.SOURCE1 == "#0")
+                {
+                    newInstruction = instructionTwo.FULL.Replace(instructionOne.DESTINATION, "R0");
+                }
+                else
+                {
+                    newInstruction = instructionTwo.FULL.Replace(instructionOne.DESTINATION, instructionOne.SOURCE1);
+                }
+
+                return newInstruction;
+            }
+
+            return "";
         }
 
         private static string GenerateNewMovMergingInstruction(Instruction instructionTwo, Instruction instructionOne)
@@ -161,6 +204,26 @@ namespace InstructionRearrangement
                     AssemblyLines.Insert(indexOfLine, newInstruction);
                     AssemblyLines.Insert(indexOfLine + 1, "");
                 }
+            }
+
+            var additionMnemonics = new string[] {"ADD", "SUB"};
+            if (additionMnemonics.Contains(mnemonicInstructionOne) &&
+                additionMnemonics.Contains(mnemonicInstructionTwo))
+            {
+                var source2InstructionOne = Convert.ToInt32(instructionOne.SOURCE2.Remove(0, 1));
+                var source2InstructionTwo = Convert.ToInt32(instructionOne.SOURCE2.Remove(0, 1));
+
+                source2InstructionOne *= mnemonicInstructionOne == "SUB" ? -1 : 1;
+                source2InstructionTwo *= mnemonicInstructionTwo == "SUB" ? -1 : 1;
+
+                var newValue = source2InstructionOne + source2InstructionTwo;
+                var newInstruction =
+                    $"{instructionTwo.MNEMONIC} {instructionTwo.DESTINATION}, {instructionOne.SOURCE1}, #{newValue}";
+
+                var instructionLine = megaInstructionTwo.Line;
+                var indexOfLine = instructionLine - 1;
+                AssemblyLines.RemoveRange(indexOfLine, 1);
+                AssemblyLines.Insert(indexOfLine, newInstruction);
             }
         }
     }

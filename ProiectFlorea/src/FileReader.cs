@@ -8,7 +8,7 @@ namespace ProiectFlorea
 {
     public class FileReader
     {
-        private string SelectedFIle;
+        public string SelectedFIle;
 
         public string ReadFromFile()
         {

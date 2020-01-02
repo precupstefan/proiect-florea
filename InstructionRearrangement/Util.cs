@@ -31,9 +31,9 @@ namespace InstructionRearrangement
                 if (InstructionUtil.IsLoadOrStoreInstruction(instructionTwo.FULL))
                 {
                     // TODO: FIGURE SHIT OUT
-                    if (instructionTwo.MNEMONIC == "ST")
+                    if (instructionTwo.MNEMONIC == "ST" && instructionTwo.SOURCE1 == instructionOne.DESTINATION)
                     {
-//                        return instructionTwo.SOURCE1 != instructionOne.DESTINATION;
+                        return true;
                     }
 
                     return false;

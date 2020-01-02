@@ -12,8 +12,6 @@ namespace Utils
         private Dictionary<int, String> pcDict = new Dictionary<int, String>();
 
 
-        //TODO: ASK FLOREA WHAT IS `BRA`
-        // WHAT IS ST(R0,R17),R5
         public List<MegaInstruction> Build(List<string> assemblyLines, List<Trace> traceLines)
         {
             if (assemblyLines.Count == 0)

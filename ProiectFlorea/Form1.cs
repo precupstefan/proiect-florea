@@ -25,6 +25,7 @@ namespace ProiectFlorea
         private List<string> modifiableAssemblyLines;
         private List<Trace> originalTracesLines;
         private List<MegaInstruction> megaInstructions;
+        private string selectedFile = "";
 
         public Form1()
         {
@@ -35,12 +36,15 @@ namespace ProiectFlorea
         {
             OriginalLinesListBox.Items.Clear();
             OriginalTracesListBox.Items.Clear();
-            originalAssemblyLines = new FileReader()
+            var fileReader = new FileReader();
+            originalAssemblyLines = fileReader
                 .PromptUserForFile("INS (*.ins)|*.ins")
                 .ReadLinesFromFile();
             originalAssemblyLines = originalAssemblyLines
-                .Select(s => Regex.Replace(s, @"[^0-9a-zA-Z:,-_# /* *()]+", ""))
+                .Select(s => Regex.Replace(s, @"[^0-9a-zA-Z:,-_# /* *()""]+", ""))
                 .ToList();
+
+            selectedFile = fileReader.SelectedFIle;
 
             modifiableAssemblyLines = originalAssemblyLines.Select(s => s).ToList();
 
@@ -96,6 +100,23 @@ namespace ProiectFlorea
             var builder = new MegaBlockBuilder();
             megaInstructions = builder.Build(originalAssemblyLines, originalTracesLines);
 //            megaInstructions.ForEach(item => MegaBlockListBox.Items.Add(item.ToString()));
+        }
+
+        private void ExportButton_Click(object sender, EventArgs e)
+        {
+            if (selectedFile == "")
+            {
+                MessageBox.Show("NO FILE SELECTED");
+                return;
+            }
+
+            var path = selectedFile.Insert(selectedFile.Length - 4, "-improved");
+            using (StreamWriter sw = File.CreateText(path))
+            {
+                modifiableAssemblyLines.ForEach(sw.WriteLine);
+            }
+
+            MessageBox.Show("File Saved succesfully");
         }
     }
 }
