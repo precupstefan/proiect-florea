@@ -65,9 +65,9 @@ namespace ProiectFlorea
                 }
             });
 
-//            originalAssemblyLines.ForEach((s => OriginalLinesListBox.Items.Add(s)));
+            originalAssemblyLines.ForEach((s => OriginalLinesListBox.Items.Add(s)));
             originalAssemblyLines.ForEach(s => OriginalLinesTextBox.AppendText(s + Environment.NewLine));
-//            originalTraces.ForEach(s => OriginalTracesListBox.Items.Add(s));
+            originalTraces.ForEach(s => OriginalTracesListBox.Items.Add(s));
             originalTracesLines = originalTraces.Select(trace => new Trace(trace)).ToList();
         }
 
@@ -86,7 +86,7 @@ namespace ProiectFlorea
             AbstractRearrangement abstractRearrangement =
                 new ImmediateMerging(modifiableAssemblyLines, originalTracesLines);
             modifiableAssemblyLines = abstractRearrangement.Rearrange();
-//            modifiableAssemblyLines.ForEach(line => ModifiedLinesListBox.Items.Add(line));
+            modifiableAssemblyLines.ForEach(line => ModifiedLinesListBox.Items.Add(line));
             modifiableAssemblyLines.ForEach(s => ModifiedLinesTextBox.AppendText(s + Environment.NewLine));
         }
 
@@ -99,7 +99,7 @@ namespace ProiectFlorea
         {
             var builder = new MegaBlockBuilder();
             megaInstructions = builder.Build(originalAssemblyLines, originalTracesLines);
-//            megaInstructions.ForEach(item => MegaBlockListBox.Items.Add(item.ToString()));
+            megaInstructions.ForEach(item => MegaBlockListBox.Items.Add(item.ToString()));
         }
 
         private void ExportButton_Click(object sender, EventArgs e)
