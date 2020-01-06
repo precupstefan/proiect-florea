@@ -32,7 +32,7 @@
             this.LoadFileButton = new System.Windows.Forms.Button();
             this.ExportButton = new System.Windows.Forms.Button();
             this.OriginalLinesListBox = new System.Windows.Forms.ListBox();
-            this.ImmediateMergingButton = new System.Windows.Forms.Button();
+            this.FixIssuesButton = new System.Windows.Forms.Button();
             this.CreateMegaBlockButton = new System.Windows.Forms.Button();
             this.OriginalTracesListBox = new System.Windows.Forms.ListBox();
             this.MegaBlockListBox = new System.Windows.Forms.ListBox();
@@ -88,16 +88,16 @@
             this.OriginalLinesListBox.Size = new System.Drawing.Size(205, 364);
             this.OriginalLinesListBox.TabIndex = 5;
             // 
-            // ImmediateMergingButton
+            // FixIssuesButton
             // 
-            this.ImmediateMergingButton.Location = new System.Drawing.Point(402, 32);
-            this.ImmediateMergingButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.ImmediateMergingButton.Name = "ImmediateMergingButton";
-            this.ImmediateMergingButton.Size = new System.Drawing.Size(130, 36);
-            this.ImmediateMergingButton.TabIndex = 8;
-            this.ImmediateMergingButton.Text = "Fix issues";
-            this.ImmediateMergingButton.UseVisualStyleBackColor = true;
-            this.ImmediateMergingButton.Click += new System.EventHandler(this.ImmediateMergingButton_Click);
+            this.FixIssuesButton.Location = new System.Drawing.Point(402, 32);
+            this.FixIssuesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.FixIssuesButton.Name = "FixIssuesButton";
+            this.FixIssuesButton.Size = new System.Drawing.Size(130, 36);
+            this.FixIssuesButton.TabIndex = 8;
+            this.FixIssuesButton.Text = "Fix issues";
+            this.FixIssuesButton.UseVisualStyleBackColor = true;
+            this.FixIssuesButton.Click += new System.EventHandler(this.FixIssuesButton_Click);
             // 
             // CreateMegaBlockButton
             // 
@@ -231,7 +231,7 @@
             this.Controls.Add(this.MegaBlockListBox);
             this.Controls.Add(this.OriginalTracesListBox);
             this.Controls.Add(this.CreateMegaBlockButton);
-            this.Controls.Add(this.ImmediateMergingButton);
+            this.Controls.Add(this.FixIssuesButton);
             this.Controls.Add(this.OriginalLinesListBox);
             this.Controls.Add(this.ExportButton);
             this.Controls.Add(this.LoadFileButton);
@@ -249,7 +249,7 @@
         private System.Windows.Forms.Button ExportButton;
         private System.Windows.Forms.Button LoadFileButton;
         private System.Windows.Forms.ListBox OriginalLinesListBox;
-        private System.Windows.Forms.Button ImmediateMergingButton;
+        private System.Windows.Forms.Button FixIssuesButton;
         private System.Windows.Forms.Button CreateMegaBlockButton;
         private System.Windows.Forms.ListBox OriginalTracesListBox;
         private System.Windows.Forms.ListBox MegaBlockListBox;

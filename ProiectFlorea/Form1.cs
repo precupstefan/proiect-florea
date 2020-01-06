@@ -65,30 +65,12 @@ namespace ProiectFlorea
             originalTracesLines = originalTraces.Select(trace => new Trace(trace)).ToList();
         }
 
-        // TODO: Event is not used. Should it be removed?
-        private void MovMergingButton_Click(object sender, EventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        // TODO: Event is not used. Should it be removed?
-        private void MovReabsorptionButton_Click(object sender, EventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private void ImmediateMergingButton_Click(object sender, EventArgs e)
+        private void FixIssuesButton_Click(object sender, EventArgs e)
         {
             AbstractRearrangement abstractRearrangement = new ImmediateMerging(modifiableAssemblyLines, originalTracesLines);
             modifiableAssemblyLines = abstractRearrangement.Rearrange();
             modifiableAssemblyLines.ForEach(line => ModifiedLinesListBox.Items.Add(line));
             modifiableAssemblyLines.ForEach(s => ModifiedLinesTextBox.AppendText(s + Environment.NewLine));
-        }
-
-        // TODO: Event is not used. Should it be removed?
-        private void MemoryAntiAliasButton_Click(object sender, EventArgs e)
-        {
-            throw new System.NotImplementedException();
         }
 
         private void CreateMegaBlockButton_Click(object sender, EventArgs e)
