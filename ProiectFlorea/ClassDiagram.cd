@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ProiectFlorea.Properties.Resources" Collapsed="true">
+    <Position X="14.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAEAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.Entities.Instruction">
+    <Position X="2.75" Y="5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAEAAAAAACAAAAAAACAAAAABAAAAAA=</HashCode>
+      <FileName>Entities\Instruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.Entities.MegaInstruction">
+    <Position X="6.75" Y="5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAIABAAAAAAAAABAAA=</HashCode>
+      <FileName>Entities\MegaInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.Entities.Trace">
+    <Position X="4.5" Y="5" Width="2" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAABAEAEAEAAAAAAIAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Trace.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.InstructionRearrangement.AbstractRearrangement" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEIAAgAACAAAAAAAAACAEAAAAAEAAAAAAQAQAAIAEAI=</HashCode>
+      <FileName>InstructionRearrangement\AbstractRearrangement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.InstructionRearrangement.ImmediateMerging" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InstructionRearrangement\ImmediateMerging.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.InstructionRearrangement.MemoryAntiAlias" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InstructionRearrangement\MemoryAntiAlias.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.InstructionRearrangement.MovMerging" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InstructionRearrangement\MovMerging.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.InstructionRearrangement.MovReabsorption" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InstructionRearrangement\MovReabsorption.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.InstructionRearrangement.InstructionRearrangementUtil">
+    <Position X="9.5" Y="5.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAYBAAAAAAABACAAAAAAAAAAAEAAAAAQAAAAA=</HashCode>
+      <FileName>InstructionRearrangement\InstructionRearrangementUtil.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.instructions.Line">
+    <Position X="0.75" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAIAAAAABAAAAAAIAA=</HashCode>
+      <FileName>src\instructions\Line.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.instructions.RequiredInstructionFormat">
+    <Position X="14.25" Y="5" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>HApQEAgCBCQFqsQAATAAJAAgQQhpogADUAgUMRDQJCg=</HashCode>
+      <FileName>src\instructions\RequiredInstructionFormat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.Utils.CodeSyntaxChecker">
+    <Position X="9.5" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAgAAAAEACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\Utils\CodeSyntaxChecker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.Utils.DiffGenerator">
+    <Position X="4.5" Y="3" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\Utils\DiffGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.Utils.InstructionUtil">
+    <Position X="9.5" Y="2.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ACAAIAAAAAAAAEQAAAAAAgAAAgAAIAQAAAACAAAACAA=</HashCode>
+      <FileName>Utils\InstructionUtil.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.Utils.MegaBlockBuilder">
+    <Position X="2.75" Y="3" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACACAAAAAAAACAAAAAEAAgAAAAAAAAAABAAA=</HashCode>
+      <FileName>Utils\MegaBlockBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.FileReader">
+    <Position X="0.75" Y="3" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAABAAAAAAAAABAAAAEAAAAAAAAA=</HashCode>
+      <FileName>src\FileReader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.Form1" Collapsed="true">
+    <Position X="14.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAgQAADAAABCACAXAAAACYAECAoAAQAAAAAAAIAA=</HashCode>
+      <FileName>Form1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProiectFlorea.Program" Collapsed="true">
+    <Position X="14.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="ProiectFlorea.Entities.InstructionType">
+    <Position X="2.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAIAAAAAAAAAAgAAAAAAQAAAAA=</HashCode>
+      <FileName>Entities\InstructionType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProiectFlorea.Entities.TraceType">
+    <Position X="1" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAIAAAAAAAAAAgAAAAAAQAAAAA=</HashCode>
+      <FileName>Entities\TraceType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

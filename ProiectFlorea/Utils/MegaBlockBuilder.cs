@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Entities;
+using ProiectFlorea.Entities;
 
-namespace Utils
+namespace ProiectFlorea.Utils
 {
     public class MegaBlockBuilder
     {

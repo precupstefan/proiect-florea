@@ -7,6 +7,11 @@ using System.Windows.Forms;
 using Entities;
 using InstructionRearrangement;
 using Utils;
+using AbstractRearrangement = ProiectFlorea.InstructionRearrangement.AbstractRearrangement;
+using ImmediateMerging = ProiectFlorea.InstructionRearrangement.ImmediateMerging;
+using MegaBlockBuilder = ProiectFlorea.Utils.MegaBlockBuilder;
+using MegaInstruction = ProiectFlorea.Entities.MegaInstruction;
+using Trace = ProiectFlorea.Entities.Trace;
 
 namespace ProiectFlorea
 {
