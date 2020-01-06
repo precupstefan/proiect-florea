@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 using Entities;
 using Utils;
@@ -26,6 +25,7 @@ namespace InstructionRearrangement
 
         public List<string> Rearrange()
         {
+            // TODO: Remove these?
             var instructions = new List<MegaInstruction>(MAX_INSTRUCTIONS_IN_PIPELINE);
             var hasCompleted = false;
 
@@ -155,34 +155,26 @@ namespace InstructionRearrangement
 
         private static string GenerateNewMovMergingInstruction(Instruction instructionTwo, Instruction instructionOne)
         {
-            var sb = new StringBuilder();
-            sb.Append(instructionTwo.MNEMONIC);
-            sb.Append(" ");
-            sb.Append(instructionTwo.DESTINATION);
-            sb.Append(", ");
-            if (instructionOne.DESTINATION == instructionTwo.SOURCE1)
-            {
-                sb.Append(instructionOne.SOURCE1);
-            }
-            else
-            {
-                sb.Append(instructionTwo.SOURCE1);
-            }
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append(instructionTwo.MNEMONIC);
+            stringBuilder.Append(" ");
+            stringBuilder.Append(instructionTwo.DESTINATION);
+            stringBuilder.Append(", ");
 
-            sb.Append(", ");
-            if (instructionOne.DESTINATION == instructionTwo.SOURCE2)
-            {
-                sb.Append(instructionOne.SOURCE1);
-            }
-            else
-            {
-                sb.Append(instructionTwo.SOURCE2);
-            }
+            stringBuilder.Append(instructionOne.DESTINATION == instructionTwo.SOURCE1
+                ? instructionOne.SOURCE1
+                : instructionTwo.SOURCE1);
 
-            var mergedInstruction = sb.ToString();
+            stringBuilder.Append(", ");
+
+            stringBuilder.Append(instructionOne.DESTINATION == instructionTwo.SOURCE2
+                ? instructionOne.SOURCE1
+                : instructionTwo.SOURCE2);
+
+            var mergedInstruction = stringBuilder.ToString();
+
             return mergedInstruction;
         }
-
 
         private void ApplyImmediateMerging(MegaInstruction megaInstructionOne, MegaInstruction megaInstructionTwo)
         {
@@ -207,8 +199,7 @@ namespace InstructionRearrangement
             }
 
             var additionMnemonics = new string[] {"ADD", "SUB"};
-            if (additionMnemonics.Contains(mnemonicInstructionOne) &&
-                additionMnemonics.Contains(mnemonicInstructionTwo))
+            if (additionMnemonics.Contains(mnemonicInstructionOne) && additionMnemonics.Contains(mnemonicInstructionTwo))
             {
                 var source2InstructionOne = Convert.ToInt32(instructionOne.SOURCE2.Remove(0, 1));
                 var source2InstructionTwo = Convert.ToInt32(instructionOne.SOURCE2.Remove(0, 1));
@@ -217,11 +208,11 @@ namespace InstructionRearrangement
                 source2InstructionTwo *= mnemonicInstructionTwo == "SUB" ? -1 : 1;
 
                 var newValue = source2InstructionOne + source2InstructionTwo;
-                var newInstruction =
-                    $"{instructionTwo.MNEMONIC} {instructionTwo.DESTINATION}, {instructionOne.SOURCE1}, #{newValue}";
+                var newInstruction = $"{instructionTwo.MNEMONIC} {instructionTwo.DESTINATION}, {instructionOne.SOURCE1}, #{newValue}";
 
                 var instructionLine = megaInstructionTwo.Line;
                 var indexOfLine = instructionLine - 1;
+
                 AssemblyLines.RemoveRange(indexOfLine, 1);
                 AssemblyLines.Insert(indexOfLine, newInstruction);
             }

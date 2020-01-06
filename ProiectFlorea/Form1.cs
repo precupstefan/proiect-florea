@@ -1,20 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DiffPlex;
-using DiffPlex.DiffBuilder;
-using DiffPlex.DiffBuilder.Model;
 using Entities;
 using InstructionRearrangement;
-using ProiectFlorea.Utils;
 using Utils;
 
 namespace ProiectFlorea
@@ -36,7 +27,9 @@ namespace ProiectFlorea
         {
             OriginalLinesListBox.Items.Clear();
             OriginalTracesListBox.Items.Clear();
+
             var fileReader = new FileReader();
+
             originalAssemblyLines = fileReader
                 .PromptUserForFile("INS (*.ins)|*.ins")
                 .ReadLinesFromFile();
@@ -46,36 +39,39 @@ namespace ProiectFlorea
 
             selectedFile = fileReader.SelectedFIle;
 
-            modifiableAssemblyLines = originalAssemblyLines.Select(s => s).ToList();
+            modifiableAssemblyLines = originalAssemblyLines.ToList();
 
-            var originaltrLines = new FileReader()
+            var originalTraceLines = new FileReader()
                 .PromptUserForFile("TRC (*.trc)|*.trc")
                 .ReadLinesFromFile();
 
+            var regex = new Regex("[ ]{2,}", RegexOptions.None);
             var originalTraces = new List<string>();
-            originaltrLines.ForEach(line =>
+
+            originalTraceLines.ForEach(line =>
             {
-                RegexOptions options = RegexOptions.None;
-                Regex regex = new Regex("[ ]{2,}", options);
                 var stuff = regex.Replace(line, " ");
                 var smth = stuff.Split(" ");
+
                 for (var i = 0; i < smth.Length - 1; i += 3)
                 {
                     originalTraces.Add($"{smth[i]} {smth[i + 1]} {smth[i + 2]}");
                 }
             });
 
-            originalAssemblyLines.ForEach((s => OriginalLinesListBox.Items.Add(s)));
+            originalAssemblyLines.ForEach(s => OriginalLinesListBox.Items.Add(s));
             originalAssemblyLines.ForEach(s => OriginalLinesTextBox.AppendText(s + Environment.NewLine));
             originalTraces.ForEach(s => OriginalTracesListBox.Items.Add(s));
             originalTracesLines = originalTraces.Select(trace => new Trace(trace)).ToList();
         }
 
+        // TODO: Event is not used. Should it be removed?
         private void MovMergingButton_Click(object sender, EventArgs e)
         {
             throw new System.NotImplementedException();
         }
 
+        // TODO: Event is not used. Should it be removed?
         private void MovReabsorptionButton_Click(object sender, EventArgs e)
         {
             throw new System.NotImplementedException();
@@ -83,13 +79,13 @@ namespace ProiectFlorea
 
         private void ImmediateMergingButton_Click(object sender, EventArgs e)
         {
-            AbstractRearrangement abstractRearrangement =
-                new ImmediateMerging(modifiableAssemblyLines, originalTracesLines);
+            AbstractRearrangement abstractRearrangement = new ImmediateMerging(modifiableAssemblyLines, originalTracesLines);
             modifiableAssemblyLines = abstractRearrangement.Rearrange();
             modifiableAssemblyLines.ForEach(line => ModifiedLinesListBox.Items.Add(line));
             modifiableAssemblyLines.ForEach(s => ModifiedLinesTextBox.AppendText(s + Environment.NewLine));
         }
 
+        // TODO: Event is not used. Should it be removed?
         private void MemoryAntiAliasButton_Click(object sender, EventArgs e)
         {
             throw new System.NotImplementedException();
@@ -111,12 +107,12 @@ namespace ProiectFlorea
             }
 
             var path = selectedFile.Insert(selectedFile.Length - 4, "-improved");
-            using (StreamWriter sw = File.CreateText(path))
+            using (var streamWriter = File.CreateText(path))
             {
-                modifiableAssemblyLines.ForEach(sw.WriteLine);
+                modifiableAssemblyLines.ForEach(streamWriter.WriteLine);
             }
 
-            MessageBox.Show("File Saved succesfully");
+            MessageBox.Show("File Saved successfully");
         }
     }
 }

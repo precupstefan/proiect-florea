@@ -1,41 +1,39 @@
-﻿using System;
-
-namespace ProiectFlorea.instructions
+﻿namespace ProiectFlorea.instructions
 {
     public static class RequiredInstructionFormat
     {
-        private static string registerSizeRegex = "[0-9]|1[0-5]";
-        private static string immediateValueRegex = @"#\d+";
-        private static string offsetSizeRegex = @"\d+";
+        private static readonly string registerSizeRegex = "[0-9]|1[0-5]";
+        private static readonly string immediateValueRegex = @"#\d+";
+        private static readonly string offsetSizeRegex = @"\d+";
 
-        private static string basicRegister = $"R({registerSizeRegex})";
+        private static readonly string basicRegister = $"R({registerSizeRegex})";
 
-        private static string booleanRegister = $"B({registerSizeRegex})";
+        private static readonly string booleanRegister = $"B({registerSizeRegex})";
 
-        private static string floatRegister = $"F({registerSizeRegex})";
+        private static readonly string floatRegister = $"F({registerSizeRegex})";
 
-        private static string registerBooleanOrSr = $"{basicRegister}|{booleanRegister})|SR";
+        private static readonly string registerBooleanOrSr = $"{basicRegister}|{booleanRegister})|SR";
 
-        private static string basicParameters =
+        private static readonly string basicParameters =
             $"{basicRegister},{basicRegister},({basicRegister}|{immediateValueRegex})";
 
-        private static string onlyBooleanParameters =
+        private static readonly string onlyBooleanParameters =
             $"{booleanRegister},{booleanRegister},{booleanRegister}";
 
-        private static string onlyFloatParameters =
+        private static readonly string onlyFloatParameters =
             $"{floatRegister},{floatRegister},{floatRegister}";
 
-        private static string twoFloatParameters = $"{floatRegister},{floatRegister}";
+        private static readonly string twoFloatParameters = $"{floatRegister},{floatRegister}";
 
-        private static string booleanRegisterWithBasicParameters =
+        private static readonly string booleanRegisterWithBasicParameters =
             $"{booleanRegister},{basicRegister},({basicRegister}|{immediateValueRegex})";
 
-        private static string booleanRegisterWithFloatRegistersAsParameters =
+        private static readonly string booleanRegisterWithFloatRegistersAsParameters =
             $"{booleanRegister},{floatRegister},{floatRegister}";
 
-        private static string basicRegisterGroup = $"\\({basicRegister},{basicRegister})\\)";
+        private static readonly string basicRegisterGroup = $"\\({basicRegister},{basicRegister})\\)";
 
-        private static string offsetOrRegisterGroup =
+        private static readonly string offsetOrRegisterGroup =
             $"({offsetSizeRegex}\\({basicRegister})\\)|{basicRegisterGroup})";
 
 

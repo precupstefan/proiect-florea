@@ -5,10 +5,10 @@ namespace InstructionRearrangement
 {
     public class MovMerging : AbstractRearrangement
     {
-
-        public MovMerging(List<string> assemblyLines, List<Trace> originalTracesLines) : base(assemblyLines,
-            originalTracesLines)
+        public MovMerging(List<string> assemblyLines, List<Trace> originalTracesLines) 
+            : base(assemblyLines, originalTracesLines)
         {
+
         }
     }
 }

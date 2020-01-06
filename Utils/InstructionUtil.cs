@@ -3,60 +3,18 @@ using Entities;
 
 namespace Utils
 {
-    public class InstructionUtil
+    public static class InstructionUtil
     {
-        public static InstructionType TypeOf(string instruction)
-        {
-            var mnemonic = instruction.Split(" ")[0];
-            if (mnemonic.Contains("LD"))
-            {
-                return InstructionType.Load;
-            }
+        private static readonly string[] BranchMnemonics = new string[] { "BT", "BF", "BSR", "BRA" };
 
-            if (mnemonic.Contains("ST"))
-            {
-                return InstructionType.Store;
-            }
+        private static readonly InstructionType[] LoadStoreInstructionTypes =
+            new InstructionType[] {InstructionType.Load, InstructionType.Store};
 
-            var bramches = new string[]
-            {
-                "BT", "BF", "BSR", "TRAP", "BRA"
-            };
-            if (bramches.Any(branch => branch.Contains(mnemonic)))
-            {
-                return InstructionType.Branch;
-            }
-
-            if (instruction.Contains("MOV PC"))
-            {
-                return InstructionType.Branch;
-            }
-
-            return InstructionType.Arithmetic;
-        }
-
-        public static bool IsBranchInstructionWithLabel(string instruction)
-        {
-            var branchMnemonics = new string[]
-            {
-                "BT", "BF", "BSR", "BRA"
-            };
-            return branchMnemonics.Any(instruction.Contains);
-        }
-
+        public static bool IsBranchInstructionWithLabel(string instruction) => BranchMnemonics.Any(instruction.Contains);
         public static bool IsTrap(string instruction) => instruction.Contains("TRAP");
         public static bool IsBsrBranch(string instruction) => instruction.Contains("BSR");
-
-        public static bool IsMovBranchInstruction(string instruction)
-        {
-            return instruction.Contains("MOV PC");
-        }
-
-        public static string GetLabelFromBranchInstruction(string instruction)
-        {
-            var splitInstruction = instruction.Split(" ");
-            return splitInstruction[0] == "BRA" ? splitInstruction[1] : splitInstruction[2];
-        }
+        public static bool IsMovBranchInstruction(string instruction) => instruction.Contains("MOV PC");
+        public static bool IsLoadOrStoreInstruction(string instruction) => LoadStoreInstructionTypes.Contains(TypeOf(instruction));
 
         public static bool IsLabelCommentOrEmptyString(string instruction)
         {
@@ -78,11 +36,38 @@ namespace Utils
             return false;
         }
 
-        public static bool IsLoadOrStoreInstruction(string instruction)
+        public static InstructionType TypeOf(string instruction)
         {
-            var loadStoreType = new InstructionType[] {InstructionType.Load, InstructionType.Store};
-            var instructionType = InstructionUtil.TypeOf(instruction);
-            return loadStoreType.Contains(instructionType);
+            var mnemonic = instruction.Split(" ")[0];
+            if (mnemonic.Contains("LD"))
+            {
+                return InstructionType.Load;
+            }
+
+            if (mnemonic.Contains("ST"))
+            {
+                return InstructionType.Store;
+            }
+
+            var branches = new string[] { "BT", "BF", "BSR", "TRAP", "BRA" };
+            if (branches.Any(branch => branch.Contains(mnemonic)))
+            {
+                return InstructionType.Branch;
+            }
+
+            if (instruction.Contains("MOV PC"))
+            {
+                return InstructionType.Branch;
+            }
+
+            return InstructionType.Arithmetic;
+        }
+
+        public static string GetLabelFromBranchInstruction(string instruction)
+        {
+            var splitInstruction = instruction.Split(" ");
+
+            return splitInstruction[0] == "BRA" ? splitInstruction[1] : splitInstruction[2];
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Entities;
 using Utils;
 
@@ -20,8 +19,7 @@ namespace InstructionRearrangement
             "MOV - ST",
         };
 
-        public static bool CanApplyMovMerging(MegaInstruction megaInstructionOne,
-            MegaInstruction megaInstructionTwo)
+        public static bool CanApplyMovMerging(MegaInstruction megaInstructionOne, MegaInstruction megaInstructionTwo)
         {
             var instructionOne = megaInstructionOne.Instruction;
             var instructionTwo = megaInstructionTwo.Instruction;
@@ -39,7 +37,7 @@ namespace InstructionRearrangement
                     return false;
                 }
 
-                // TODO: take into account Source2 is nulll
+                // TODO: take into account Source2 is null
 //                if (instructionOne.DESTINATION == instructionTwo.SOURCE1)
 //                {
 //                    return true;
@@ -51,11 +49,11 @@ namespace InstructionRearrangement
             return false;
         }
 
-        public static bool CanApplyImmediateMerging(MegaInstruction megaInstructionOne,
-            MegaInstruction megaInstructionTwo)
+        public static bool CanApplyImmediateMerging(MegaInstruction megaInstructionOne, MegaInstruction megaInstructionTwo)
         {
             var instructionOne = megaInstructionOne.Instruction;
             var instructionTwo = megaInstructionTwo.Instruction;
+
             if (instructionOne.SOURCE2 == null || instructionTwo.SOURCE2 == null ||
                 !instructionOne.SOURCE2.StartsWith("#") || !instructionTwo.SOURCE2.StartsWith("#"))
             {
@@ -78,8 +76,7 @@ namespace InstructionRearrangement
             return instructionOne.DESTINATION == instructionTwo.SOURCE1;
         }
 
-        public static bool CanApplyMovReabsorption(MegaInstruction megaInstructionOne,
-            MegaInstruction megaInstructionTwo)
+        public static bool CanApplyMovReabsorption(MegaInstruction megaInstructionOne, MegaInstruction megaInstructionTwo)
         {
             var instructionOne = megaInstructionOne.Instruction;
             var instructionTwo = megaInstructionTwo.Instruction;
@@ -92,8 +89,7 @@ namespace InstructionRearrangement
             return false;
         }
 
-        public static bool CanApplyMemoryAntiAlias(MegaInstruction megaInstructionOne,
-            MegaInstruction megaInstructionTwo)
+        public static bool CanApplyMemoryAntiAlias(MegaInstruction megaInstructionOne, MegaInstruction megaInstructionTwo)
         {
             var instructionOne = megaInstructionOne.Instruction;
             var instructionTwo = megaInstructionTwo.Instruction;
@@ -114,8 +110,7 @@ namespace InstructionRearrangement
             return false;
         }
 
-        private static bool AreDestinationAddressesEqual(MegaInstruction megaInstructionOne,
-            MegaInstruction megaInstructionTwo)
+        private static bool AreDestinationAddressesEqual(MegaInstruction megaInstructionOne, MegaInstruction megaInstructionTwo)
         {
             var traceOne = megaInstructionOne.Trace;
             var traceTwo = megaInstructionTwo.Trace;
@@ -134,6 +129,7 @@ namespace InstructionRearrangement
             var mnemonicInstructionOne = instructionOne.MNEMONIC;
             var mnemonicInstructionTwo = instructionTwo.MNEMONIC;
             var combination = $"{mnemonicInstructionOne} - {mnemonicInstructionTwo}";
+
             return combination;
         }
     }

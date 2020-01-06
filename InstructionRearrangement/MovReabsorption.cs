@@ -5,10 +5,10 @@ namespace InstructionRearrangement
 {
     public class MovReabsorption : AbstractRearrangement
     {
-
-        public MovReabsorption(List<string> assemblyLines, List<Trace> originalTracesLines) : base(assemblyLines,
-            originalTracesLines)
+        public MovReabsorption(List<string> assemblyLines, List<Trace> originalTracesLines) 
+            : base(assemblyLines, originalTracesLines)
         {
+
         }
     }
 }

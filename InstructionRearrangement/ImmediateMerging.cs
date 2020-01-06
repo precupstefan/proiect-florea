@@ -9,13 +9,13 @@ namespace InstructionRearrangement
     {
         private static int LINE_GAP { get; } = 1;
 
-        private string[] allowedCombinations = new string[]
+        private readonly string[] allowedCombinations = new string[]
         {
             "MULT - ADD",
             "ADD - AND"
         };
 
-        protected  bool ImproveCode(List<MegaInstruction> instructions)
+        protected bool ImproveCode(List<MegaInstruction> instructions)
         {
             if (instructions.Count == 1)
             {
@@ -60,6 +60,7 @@ namespace InstructionRearrangement
                             AssemblyLines.RemoveRange(indexOfLine, 2);
                             var newInstruction = $"MOV {instructionTwo.SOURCE1}, {instructionOne.SOURCE1}";
                             AssemblyLines.Insert(indexOfLine, newInstruction);
+
                             return true;
                         }
                     }
@@ -71,9 +72,10 @@ namespace InstructionRearrangement
             return false;
         }
 
-        public ImmediateMerging(List<string> assemblyLines, List<Trace> originalTracesLines) : base(assemblyLines,
-            originalTracesLines)
+        public ImmediateMerging(List<string> assemblyLines, List<Trace> originalTracesLines) 
+            : base(assemblyLines, originalTracesLines)
         {
+
         }
     }
 }

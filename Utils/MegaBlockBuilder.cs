@@ -7,10 +7,9 @@ namespace Utils
     public class MegaBlockBuilder
     {
         private int index = 0;
-        private int? PC = 0;
-        private Stack<int> IndexQueue = new Stack<int>();
-        private Dictionary<int, String> pcDict = new Dictionary<int, String>();
-
+        private int? programCounter = 0;
+        private readonly Stack<int> indexQueue = new Stack<int>();
+        private readonly Dictionary<int, string> programCounterDictionary = new Dictionary<int, string>();
 
         public List<MegaInstruction> Build(List<string> assemblyLines, List<Trace> traceLines)
         {
@@ -25,15 +24,21 @@ namespace Utils
             }
 
             var list = new List<MegaInstruction>();
+
+            // TODO: Remove unused variable?
             var tracesHandled = 0;
+
             traceLines.ForEach(
                 trace =>
                 {
                     tracesHandled++;
                     var goToNextTrace = false;
+
                     while (!goToNextTrace)
                     {
                         var instruction = assemblyLines[index];
+
+                        // TODO: Remove this debugging "hack"
                         if (instruction.Contains("trap"))
                         {
                             var x = 1 == 1;
@@ -45,17 +50,18 @@ namespace Utils
                             continue;
                         }
 
-                        if (!pcDict.ContainsKey((int) PC) ||
-                            !pcDict[(int) PC].Equals(instruction))
+                        if (programCounter.HasValue && !programCounterDictionary.ContainsKey(programCounter.Value)
+                            || (programCounter.HasValue && !programCounterDictionary[programCounter.Value].Equals(instruction)))
                         {
-                            pcDict.Add((int) PC, instruction);
+                            programCounterDictionary.Add((int) programCounter, instruction);
                         }
 
                         var instructionType = InstructionUtil.TypeOf(instruction);
                         if (instructionType == InstructionType.Arithmetic)
                         {
-                            var arithmeticTrace = new Trace($"A {PC} XXXX");
+                            var arithmeticTrace = new Trace($"A {programCounter} XXXX");
                             var megaInstruction = new MegaInstruction(index + 1, instruction, arithmeticTrace);
+
                             list.Add(megaInstruction);
                             index++;
                         }
@@ -75,30 +81,31 @@ namespace Utils
                                 var shouldSkip = false;
                                 if (
 //                                    !trace.IsOfType(TraceType.Branch)|| 
-                                    trace.CURRENT_ADDRESS != PC)
+                                    trace.CURRENT_ADDRESS != programCounter)
                                 {
-                                    desiredTrace = new Trace($"A {PC} XXXX");
+                                    desiredTrace = new Trace($"A {programCounter} XXXX");
                                     shouldSkip = true;
                                 }
 
                                 var megaInstruction = new MegaInstruction(index + 1, instruction, desiredTrace);
                                 list.Add(megaInstruction);
+
                                 if (shouldSkip)
                                 {
-                                    PC++;
+                                    programCounter++;
                                     index++;
                                     goToNextTrace = false;
                                     continue;
                                 }
 
-
                                 index = DetermineIndex(assemblyLines, instruction);
                             }
                         }
 
-                        PC = instructionType != InstructionType.Branch ? PC + 1 : trace.DESTINATION_ADDRESS;
+                        programCounter = instructionType != InstructionType.Branch ? programCounter + 1 : trace.DESTINATION_ADDRESS;
                     }
                 });
+
             return list;
         }
 
@@ -108,7 +115,6 @@ namespace Utils
             if (isBranchInstructionWithLabel && !instruction.Contains("printf"))
             {
                 var label = InstructionUtil.GetLabelFromBranchInstruction(instruction);
-
                 var indexOfLabel = assemblyLines.FindIndex(s => s.Contains(label + ":"));
 
                 if (indexOfLabel == -1)
@@ -118,7 +124,7 @@ namespace Utils
 
                 if (InstructionUtil.IsBsrBranch(instruction))
                 {
-                    IndexQueue.Push(index + 1);
+                    indexQueue.Push(index + 1);
                 }
 
                 return indexOfLabel + 1;
@@ -127,7 +133,7 @@ namespace Utils
             var isMovBranch = InstructionUtil.IsMovBranchInstruction(instruction);
             if (isMovBranch || instruction.Contains("printf"))
             {
-                return IndexQueue.Pop();
+                return indexQueue.Pop();
             }
 
             if (InstructionUtil.IsTrap(instruction))

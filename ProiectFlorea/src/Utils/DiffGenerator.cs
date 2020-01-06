@@ -19,39 +19,38 @@ namespace ProiectFlorea.Utils
 
         public string GetDiffedFile()
         {
-            var sb = new StringBuilder();
-            var d = new Differ();
-            var builder = new InlineDiffBuilder(d);
-            var result = builder.BuildDiffModel(oldText, newText);
-
+            var stringBuilder = new StringBuilder();
+            var differ = new Differ();
+            var inlineDiffBuilder = new InlineDiffBuilder(differ);
+            var result = inlineDiffBuilder.BuildDiffModel(oldText, newText);
 
             foreach (var line in result.Lines)
             {
                 if (line.Type == ChangeType.Inserted)
                 {
-                    sb.Append("+ ");
+                    stringBuilder.Append("+ ");
                 }
                 else if (line.Type == ChangeType.Deleted)
                 {
-                    sb.Append("- ");
+                    stringBuilder.Append("- ");
                 }
                 else if (line.Type == ChangeType.Modified)
                 {
-                    sb.Append("* ");
+                    stringBuilder.Append("* ");
                 }
                 else if (line.Type == ChangeType.Imaginary)
                 {
-                    sb.Append("? ");
+                    stringBuilder.Append("? ");
                 }
                 else if (line.Type == ChangeType.Unchanged)
                 {
-                    sb.Append("  ");
+                    stringBuilder.Append("  ");
                 }
 
-                sb.Append(line.Text + "\r\n");
+                stringBuilder.Append(line.Text + "\r\n");
             }
 
-            return sb.ToString();
+            return stringBuilder.ToString();
         }
     }
 }

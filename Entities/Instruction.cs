@@ -14,24 +14,20 @@
 
         public Instruction(string instruction)
         {
-            FULL = instruction;
             var splitInstruction = instruction.Split(' ');
 
-            var mnemonic = splitInstruction[0].Trim();
-            var destination = splitInstruction[1].Replace(",", "").Trim();
-            MNEMONIC = mnemonic;
-            DESTINATION = destination;
+            FULL = instruction;
+            MNEMONIC = splitInstruction[0].Trim();
+            DESTINATION = splitInstruction[1].Replace(",", "").Trim();
 
             if (splitInstruction.Length > 2)
             {
-                var source1 = splitInstruction[2].Replace(",", "").Trim();
-                SOURCE1 = source1;
+                SOURCE1 = splitInstruction[2].Replace(",", "").Trim();
             }
 
             if (splitInstruction.Length >= 3)
             {
-                var source2 = splitInstruction.Length == 4 ? splitInstruction[3].Trim() : null;
-                SOURCE2 = source2;
+                SOURCE2 = splitInstruction.Length == 4 ? splitInstruction[3].Trim() : null;
             }
         }
 

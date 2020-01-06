@@ -12,19 +12,15 @@ namespace Entities
 
         public int? DESTINATION_ADDRESS { get; }
 
-        public Trace(string trace)
+        public Trace(string traceString)
         {
+            var splitTrace = traceString.Split(' ');
+            var type = DetermineTraceType(splitTrace[0]);
 
-            FULL = trace;
-            var splitTrace = trace.Split(' ');
-
-            TraceType type;
-            type = DetermineTraceType(splitTrace[0]);
-
+            FULL = traceString;
             TYPE = type;
-
-
             CURRENT_ADDRESS = Convert.ToInt32(splitTrace[1]);
+
             if (splitTrace[2] != "XXXX")
             {
                 DESTINATION_ADDRESS = Convert.ToInt32(splitTrace[2]);
