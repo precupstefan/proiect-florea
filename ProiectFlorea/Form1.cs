@@ -21,6 +21,9 @@ namespace ProiectFlorea
         public Form1()
         {
             InitializeComponent();
+
+            OriginalLinesTextBox.ScrollBars = ScrollBars.Vertical;
+            ModifiedLinesTextBox.ScrollBars = ScrollBars.Vertical;
         }
 
         private void LoadFileButton_Click(object sender, EventArgs e)
